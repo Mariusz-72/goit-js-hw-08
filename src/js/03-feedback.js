@@ -9,17 +9,17 @@ const form = document.querySelector('.feedback-form');
 let formState = {
     email: '',
     message: ''
-};
+};                     //deklaracja zmiennych dla email i  message//
 
 const checkStorage = localStorage.getItem(LOCALSTORAGE_KEY);
- if (checkStorage) {
+ if (checkStorage) {                                          //sprawdzam czy w localStorage pod kluczem feedback-form...  są dane//
     formState = JSON.parse(checkStorage);
         form.elements.email.value = formState.email;
         form.elements.message.value = formState.message;
-    }
+    }               //.. jak są to pobieranie danych z formularza do formState//
 
 
-const throttledSave = throttle((data) => {
+const throttledSave = throttle((data) => {                         //uruchomienie funkcji throttledSave która zapisuje do localStorage z opóźnieniem//
     localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(data));
     
 }, 500);
@@ -27,28 +27,28 @@ const throttledSave = throttle((data) => {
 
 
 
-function saveData(event) {
+function saveData(event) {                               //funkcja saveData  aktualizuje formState i uruchamia throttledSave do zapisu w localStorage (z opóźnieniem)//
     formState[event.target.name] = event.target.value;
     throttledSave(formState)
 }
 
-form.addEventListener("input", saveData);
+form.addEventListener("input", saveData);  // nasłuch na input które ma wywołać saveData - przy każdej wprowadzonej zmianie w formularzu//
 
-const sentForm = eventSent => {
+const sentForm = eventSent => {                //funkcja sentForm do odsługi "submit'a"//
     eventSent.preventDefault();
     const {
         elements: { email, message } } = eventSent.currentTarget;
     const objectData = {
-        email: email.value,
+        email: email.value,                        //zapis danych z pól formularza do obiektu objectData//
         message: message.value,
     };
-    console.log(objectData);
-    localStorage.removeItem(LOCALSTORAGE_KEY);
+    console.log(objectData);               //logowanie tych danych do konsoli//
+    localStorage.removeItem(LOCALSTORAGE_KEY);    //usunięcie danych z localStorage//
     formState = {
         email: '',
         message: ''
     };
-    form.reset();
+    form.reset();                                   // reset formState i wyczyszczenie formularza//
 };
 
-form.addEventListener('submit', sentForm);
+form.addEventListener('submit', sentForm);  //nasłuch na "submit" aby wywołać funkcję sentForm//
