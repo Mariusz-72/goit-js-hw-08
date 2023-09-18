@@ -44,7 +44,7 @@ const throttledSave = throttle((data) => {                         //uruchomieni
 
 function saveData(event) {                               //funkcja saveData  aktualizuje formState i uruchamia throttledSave do zapisu w localStorage (z opóźnieniem)//
   formState[event.target.name] = event.target.value;
-    //throttledSave(formState) 
+   
     throttledSave(formState)
 }
 
