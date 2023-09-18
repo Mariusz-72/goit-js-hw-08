@@ -26,12 +26,12 @@ function validateForm() {                                     //walidacja formul
 }
 
 
-const checkStorage = localStorage.getItem(LOCALSTORAGE_KEY);
- if (checkStorage) {                                          //sprawdzam czy w localStorage pod kluczem feedback-form...  są dane//
-    formState = JSON.parse(checkStorage);
-        emailInput.value = formState.email;
-        messageTextarea.value = formState.message;
-    }               //.. jak są to pobieranie danych z formularza do formState//
+//const checkStorage = localStorage.getItem(LOCALSTORAGE_KEY);
+ //if (checkStorage) {                                          //sprawdzam czy w localStorage pod kluczem feedback-form...  są dane//
+  //  formState = JSON.parse(checkStorage);
+  //      emailInput.value = formState.email;
+  //      messageTextarea.value = formState.message;
+  //  }               //.. jak są to pobieranie danych z formularza do formState//
 
 
 const throttledSave = throttle((data) => {                         //uruchomienie funkcji throttledSave która zapisuje do localStorage z opóźnieniem//
@@ -44,7 +44,8 @@ const throttledSave = throttle((data) => {                         //uruchomieni
 
 function saveData(event) {                               //funkcja saveData  aktualizuje formState i uruchamia throttledSave do zapisu w localStorage (z opóźnieniem)//
   formState[event.target.name] = event.target.value;
-  throttledSave(formState)                          
+    //throttledSave(formState) 
+    throttledSave(formState)
 }
 
 form.addEventListener("input", saveData);  // nasłuch na input które ma wywołać saveData - przy każdej wprowadzonej zmianie w formularzu//
@@ -58,14 +59,9 @@ function loadDataFromLocalStorage() {
     }
 }
 
+window.addEventListener('load', loadDataFromLocalStorage);
 
-loadDataFromLocalStorage();
-
-
-
-window.addEventListener('load', onLoad); //wywołanie onLoad po załadowaniu strony
-
-const sentForm = event => {                //funkcja sentForm do odsługi "submit'a"//
+const sentForm = eventSent => {                //funkcja sentForm do odsługi "submit'a"//
     eventSent.preventDefault(); 
     if (validateForm()) {                       // jeśli validateForm zwraca true to pobierane są email i message
       const {
