@@ -58,9 +58,9 @@ function loadDataFromLocalStorage() {
     }
 }
 
-function onLoad() {
-    loadDataFromLocalStorage();
-}
+
+loadDataFromLocalStorage();
+
 
 
 window.addEventListener('load', onLoad); //wywołanie onLoad po załadowaniu strony
